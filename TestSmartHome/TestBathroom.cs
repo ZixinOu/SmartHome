@@ -4,7 +4,7 @@ using SmartHome;
 namespace TestSmartHome;
 
 [TestClass]
-public class TestRoom
+public class TestBathroom
 {
     [TestMethod]
     public void Update_TemperatureLowerThanTarget_ActivatesHeating()
