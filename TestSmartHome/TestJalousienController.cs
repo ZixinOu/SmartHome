@@ -9,7 +9,7 @@ public class JalousiencontrollerTests
     public void Jalousie_faehrt_runter_wenn_heiss_und_keine_Personen()
     {
         // Arrange
-        var room = new TestRoom("Wohnzimmer");
+        var room = new RoomDummy("Wohnzimmer");
         var ctrl = new Jalousiencontroler(room);
 
         var output = new StringWriter();
@@ -30,7 +30,7 @@ public class JalousiencontrollerTests
     public void Jalousie_faehrt_hoch_wenn_Personen_im_Raum()
     {
         // Arrange
-        var room = new TestRoom("Wohnzimmer");
+        var room = new RoomDummy("Wohnzimmer");
         var ctrl = new Jalousiencontroler(room);
 
         ctrl.Operate(30, 22, 0, false, false);

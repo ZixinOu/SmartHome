@@ -1,7 +1,7 @@
 ﻿
 using SmartHome;
 
-class Bathroom : Room
+public class Bathroom : Room
 {
     public Bathroom() : base("Bad/WC", false) { }
 

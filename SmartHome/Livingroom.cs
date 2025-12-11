@@ -1,7 +1,7 @@
 ﻿
 using SmartHome;
 
-class LivingRoom : Room
+public class LivingRoom : Room
 {
     public LivingRoom() : base("Wohnzimmer", true) { }
 

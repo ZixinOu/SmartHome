@@ -1,15 +1,27 @@
-﻿using SmartHome;
+﻿using Moq;
+using SmartHome;
 
 namespace TestSmartHome;
 
-public class TestRoom : Room
+[TestClass]
+public class TestRoom
 {
-    public TestRoom(string name)
-        : base(name, hasBlinds: false, hasAwnings: false)
+    [TestMethod]
+    public void Update_TemperatureLowerThanTarget_ActivatesHeating()
     {
-    }
+        // Arrange
+        var bathroom = new Bathroom();
+        bathroom.TargetTemperature = 23;
+        var weatherData = new WeatherData { Temperature = 20 };
 
-    public override void Update(WeatherData weatherData)
-    {
+        var writer = new StringWriter();
+        Console.SetOut(writer);
+
+        // Act
+        bathroom.Update(weatherData);
+
+        // Assert
+        var output = writer.ToString();
+        Assert.Contains("[Bad/WC] Heating activated.", output);
     }
 }

@@ -9,7 +9,7 @@ public class HeatingVentTests
     public void HeatingVent_Oeffnet_wenn_Aussentemperatur_zu_tief()
     {
         // Arrange
-        var room = new TestRoom("Wohnzimmer") { TargetTemperature = 22 };
+        var room = new RoomDummy("Wohnzimmer") { TargetTemperature = 22 };
         var vent = new HeatingVent(room);
 
         var output = new StringWriter();
@@ -28,7 +28,7 @@ public class HeatingVentTests
     public void HeatingVent_Schliesst_wenn_Temperatur_ausreichend()
     {
         // Arrange
-        var room = new TestRoom("Wohnzimmer") { TargetTemperature = 22 };
+        var room = new RoomDummy("Wohnzimmer") { TargetTemperature = 22 };
         var vent = new HeatingVent(room);
 
         vent.Operate(15, room.TargetTemperature, 0, false, false);

@@ -1,6 +1,6 @@
 ﻿using SmartHome;
 
-class WinterGarden : Room
+public class WinterGarden : Room
 {
     public WinterGarden() : base("Wintergarten", true, true) { }
 

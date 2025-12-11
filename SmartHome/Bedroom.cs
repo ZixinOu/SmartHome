@@ -1,6 +1,6 @@
 ﻿using SmartHome;
 
-class Bedroom : Room
+public class Bedroom : Room
 {
     public Bedroom() : base("Schlafzimmer", true) { }
 

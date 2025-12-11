@@ -1,7 +1,7 @@
 ﻿
 using SmartHome;
 
-class Kitchen : Room
+public class Kitchen : Room
 {
     public Kitchen() : base("Küche", true) { }
 

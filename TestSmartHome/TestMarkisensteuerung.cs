@@ -9,7 +9,7 @@ public class TestMarkisensteuerung
     public void Markise_wird_ausgefahren_wenn_Bedingungen_erfuellt()
     {
         // Arrange
-        var room = new TestRoom("Wohnzimmer");
+        var room = new RoomDummy("Wohnzimmer");
         var sut = new Markisensteuerung(room);
 
         var sw = new StringWriter();
@@ -32,7 +32,7 @@ public class TestMarkisensteuerung
     public void Markise_wird_eingefahren_wenn_Wind_zu_stark()
     {
         // Arrange
-        var room = new TestRoom("Wohnzimmer");
+        var room = new RoomDummy("Wohnzimmer");
         var sut = new Markisensteuerung(room);
 
         var sw = new StringWriter();
@@ -55,7 +55,7 @@ public class TestMarkisensteuerung
     public void Markise_wird_eingefahren_wenn_es_regnet()
     {
         // Arrange
-        var room = new TestRoom("Wohnzimmer");
+        var room = new RoomDummy("Wohnzimmer");
         var sut = new Markisensteuerung(room);
 
         var sw = new StringWriter();
