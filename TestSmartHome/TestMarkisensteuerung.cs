@@ -3,7 +3,6 @@
 namespace TestSmartHome;
 
 [TestClass]
-
 public class TestMarkisensteuerung
 {
     [TestMethod]
@@ -18,7 +17,7 @@ public class TestMarkisensteuerung
 
         double externalTemp = 30;
         double roomTemp = 22;
-        double windSpeed = 20;   
+        double windSpeed = 20;
         bool isRaining = false;
 
         // Act
@@ -41,7 +40,7 @@ public class TestMarkisensteuerung
 
         double externalTemp = 30;
         double roomTemp = 22;
-        double windSpeed = 40;   
+        double windSpeed = 40;
         bool isRaining = false;
 
         // Act
@@ -65,7 +64,7 @@ public class TestMarkisensteuerung
         double externalTemp = 30;
         double roomTemp = 22;
         double windSpeed = 10;
-        bool isRaining = true; 
+        bool isRaining = true;
 
         // Act
         sut.Operate(externalTemp, roomTemp, windSpeed, isRaining, false);
@@ -73,17 +72,5 @@ public class TestMarkisensteuerung
         // Assert
         string output = sw.ToString();
         Assert.Contains("Markise wird eingefahren", output);
-    }
-}
-
-public class TestRoom : Room
-{
-    public TestRoom(string name)
-        : base(name, hasBlinds: false, hasAwnings: false)
-    {
-    }
-
-    public override void Update(WeatherData weatherData)
-    {
     }
 }
