@@ -1,6 +1,6 @@
 ﻿using SmartHome;
 
-namespace TestSmartHome;
+namespace SmartHome.Tests;
 
 public class RoomDummy : Room
 {
