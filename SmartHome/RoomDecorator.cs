@@ -23,5 +23,4 @@ namespace SmartHome
             bool isRaining,
             bool peopleInRoom);
     }
-
 }
