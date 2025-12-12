@@ -3,5 +3,5 @@ using SmartHome;
 
 public class Kitchen : Room
 {
-    public Kitchen() : base("Küche", true) { }
+    public Kitchen() : base("Küche") { }
 }

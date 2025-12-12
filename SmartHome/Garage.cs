@@ -2,5 +2,5 @@
 
 public class Garage : Room
 {
-    public Garage() : base("Garage", false) { }
+    public Garage() : base("Garage") { }
 }

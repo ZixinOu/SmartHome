@@ -3,5 +3,5 @@ using SmartHome;
 
 public class Bathroom : Room
 {
-    public Bathroom() : base("Bad/WC", false) { }
+    public Bathroom() : base("Bad/WC") { }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SmartHome.Tests;
 
-public class FakeOutput : IOutput
+public class DummyOutput : IOutput
 {
     public string LastMessage = "";
 

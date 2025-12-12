@@ -4,11 +4,11 @@ namespace SmartHome;
 
 public class Jalousiencontroler : RoomDecorator
 {
-    private bool _isLowered = false;
+    private bool _isLowered ;
 
-    public Jalousiencontroler(Room room, IOutput output = null)
-        : base(room, output)
+    public Jalousiencontroler(Room room, IOutput output) : base(room, output)
     {
+        innerRoom.HasBlinds = true;
         if (room.Name == "Bad/WC" || room.Name == "Garage")
             throw new InvalidOperationException("Jalousiensteuerungen sind in diesem Raum nicht erlaubt.");
     }

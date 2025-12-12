@@ -2,10 +2,10 @@
 
 public abstract class RoomDecorator : Room
 {
-    protected Room innerRoom;
+    public Room innerRoom;
     protected IOutput Output;
 
-    protected RoomDecorator(Room room, IOutput output = null)
+    protected RoomDecorator(Room room, IOutput output)
         : base(room.Name, room.HasBlinds, room.HasAwnings)
     {
         innerRoom = room;

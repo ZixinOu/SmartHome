@@ -2,5 +2,5 @@
 
 public class WinterGarden : Room
 {
-    public WinterGarden() : base("Wintergarten", true, true) { }
+    public WinterGarden() : base("Wintergarten") { }
 }

@@ -2,5 +2,5 @@
 
 public class Bedroom : Room
 {
-    public Bedroom() : base("Schlafzimmer", true) { }
+    public Bedroom() : base("Schlafzimmer") { }
 }

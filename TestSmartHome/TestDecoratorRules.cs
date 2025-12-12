@@ -10,87 +10,57 @@ namespace SmartHome.Tests
         [TestMethod]
         public void HeatingVent_NotAllowedInWinterGarden()
         {
-            try
-            {
-                _ = new HeatingVent(new WinterGarden());
-                Assert.Fail("Expected InvalidOperationException was not thrown.");
-            }
-            catch (InvalidOperationException)
-            {
-            }
+            Assert.Throws<InvalidOperationException>(
+                () => new HeatingVent(new WinterGarden(), new DummyOutput()));
         }
 
         [TestMethod]
         public void HeatingVent_NotAllowedInGarage()
         {
-            try
-            {
-                _ = new HeatingVent(new Garage());
-                Assert.Fail("Expected InvalidOperationException was not thrown.");
-            }
-            catch (InvalidOperationException)
-            {
-            }
+            Assert.Throws<InvalidOperationException>(
+                () => new HeatingVent(new Garage(), new DummyOutput()));
         }
 
         [TestMethod]
         public void HeatingVent_AllowedInBathroom()
         {
-            var hv = new HeatingVent(new Bathroom());
+            var hv = new HeatingVent(new Bathroom(), new DummyOutput());
             Assert.IsNotNull(hv);
         }
 
         [TestMethod]
         public void Jalousien_NotAllowedInBathroom()
         {
-            try
-            {
-                _ = new Jalousiencontroler(new Bathroom());
-                Assert.Fail("Expected InvalidOperationException was not thrown.");
-            }
-            catch (InvalidOperationException)
-            {
-            }
+            Assert.Throws<InvalidOperationException>(
+                () => new Jalousiencontroler(new Bathroom(), new DummyOutput()));
         }
 
         [TestMethod]
         public void Jalousien_NotAllowedInGarage()
         {
-            try
-            {
-                _ = new Jalousiencontroler(new Garage());
-                Assert.Fail("Expected InvalidOperationException was not thrown.");
-            }
-            catch (InvalidOperationException)
-            {
-            }
+            Assert.Throws<InvalidOperationException>(
+                () => new Jalousiencontroler(new Garage(), new DummyOutput()));
         }
 
         [TestMethod]
         public void Jalousien_AllowedInBedroom()
         {
-            var jal = new Jalousiencontroler(new Bedroom());
+            var jal = new Jalousiencontroler(new Bedroom(), new DummyOutput());
             Assert.IsNotNull(jal);
         }
 
         [TestMethod]
         public void Markise_AllowedInWinterGarden()
         {
-            var m = new Markisensteuerung(new WinterGarden());
+            var m = new Markisensteuerung(new WinterGarden(), new DummyOutput());
             Assert.IsNotNull(m);
         }
 
         [TestMethod]
         public void Markise_NotAllowedInKitchen()
         {
-            try
-            {
-                _ = new Markisensteuerung(new Kitchen());
-                Assert.Fail("Expected InvalidOperationException was not thrown.");
-            }
-            catch (InvalidOperationException)
-            {
-            }
+            Assert.Throws<InvalidOperationException>(
+                () => new Markisensteuerung(new Kitchen(), new DummyOutput()));
         }
     }
 }
