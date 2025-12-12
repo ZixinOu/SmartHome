@@ -22,29 +22,25 @@ namespace SmartHome.Tests
         [TestMethod]
         public void HeatingVent_OpensWhenCold()
         {
-            var hv = new HeatingVent(new Bathroom());
-
-            var sw = CaptureOutput();
+            var output = new FakeOutput();
+            var hv = new HeatingVent(new Bathroom(), output);
+            
             hv.Operate(externalTemperature: 5, roomTemperature: 20, windSpeed: 0, isRaining: false, peopleInRoom: true);
-            ResetConsole();
-
-            var output = sw.ToString();
-            StringAssert.Contains(output, "geöffnet");
+            
+            StringAssert.Contains(output.LastMessage, "geöffnet");
         }
 
         [TestMethod]
         public void HeatingVent_ClosesWhenWarm()
         {
-            var hv = new HeatingVent(new Bathroom());
+            var output = new FakeOutput();
+            var hv = new HeatingVent(new Bathroom(), output);
             
             hv.Operate(5, 20, 0, false, true);
-
-            var sw = CaptureOutput();
+            
             hv.Operate(externalTemperature: 25, roomTemperature: 20, windSpeed: 0, isRaining: false, peopleInRoom: true);
-            ResetConsole();
-
-            var output = sw.ToString();
-            StringAssert.Contains(output, "geschlossen");
+            
+            StringAssert.Contains(output.LastMessage, "geschlossen");
         }
     }
 }

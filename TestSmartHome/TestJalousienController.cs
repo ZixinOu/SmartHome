@@ -22,27 +22,25 @@ namespace SmartHome.Tests
         [TestMethod]
         public void Jalousien_Lowers_WhenHotAndNoPeople()
         {
-            var jal = new Jalousiencontroler(new Bedroom());
+            var output = new FakeOutput();
+            var jal = new Jalousiencontroler(new Bedroom(), output);
 
-            var sw = CaptureOutput();
             jal.Operate(30, 20, 0, false, false);
-            ResetConsole();
 
-            StringAssert.Contains(sw.ToString(), "runter");
+            StringAssert.Contains(output.LastMessage, "runter");
         }
 
         [TestMethod]
         public void Jalousien_Raises_WhenPeoplePresent()
         {
-            var jal = new Jalousiencontroler(new Bedroom());
+            var output = new FakeOutput();
+            var jal = new Jalousiencontroler(new Bedroom(), output);
             
             jal.Operate(30, 20, 0, false, false);
 
-            var sw = CaptureOutput();
             jal.Operate(30, 20, 0, false, true);
-            ResetConsole();
 
-            StringAssert.Contains(sw.ToString(), "hoch");
+            StringAssert.Contains(output.LastMessage, "hoch");
         }
     }
 }

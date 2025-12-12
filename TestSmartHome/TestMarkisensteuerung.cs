@@ -22,25 +22,22 @@ namespace SmartHome.Tests
         [TestMethod]
         public void Markise_Extends_WhenHotLowWindDry()
         {
-            var m = new Markisensteuerung(new WinterGarden());
+            var output = new FakeOutput();
+            var m = new Markisensteuerung(new WinterGarden(), output);
 
-            var sw = CaptureOutput();
             m.Operate(30, 20, 10, false, false);
-            ResetConsole();
 
-            StringAssert.Contains(sw.ToString(), "ausgefahren");
+            StringAssert.Contains(output.LastMessage,"ausgefahren");
         }
 
         [TestMethod]
         public void Markise_Retracts_WhenWindHigh()
         {
-            var m = new Markisensteuerung(new WinterGarden());
+            var output = new FakeOutput();
+            var m = new Markisensteuerung(new WinterGarden(), output);
 
-            var sw = CaptureOutput();
             m.Operate(30, 20, 60, false, false);
-            ResetConsole();
-
-            StringAssert.Contains(sw.ToString(), "eingefahren");
+            StringAssert.Contains(output.LastMessage,"eingefahren");
         }
     }
 }
