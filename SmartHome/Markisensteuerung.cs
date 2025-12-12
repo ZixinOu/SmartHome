@@ -6,6 +6,8 @@ public class Markisensteuerung : RoomDecorator
         : base(room)
     {
         HasAwnings = true;
+        if (room.Name != "Wintergarten")
+            throw new InvalidOperationException("Markisensteuerungen sind nur im Wintergarten erlaubt.");
     }
 
     public override void Operate(

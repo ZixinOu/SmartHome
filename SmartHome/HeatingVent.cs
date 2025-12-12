@@ -6,7 +6,10 @@ public class HeatingVent : RoomDecorator
 
     public HeatingVent(Room room) : base(room)
     {
+        if (room.Name == "Wintergarten" || room.Name == "Garage")
+            throw new InvalidOperationException("Heizungsventile sind in diesem Raum nicht erlaubt.");
     }
+
 
     public override void Operate(double externalTemperature, double roomTemperature, double windSpeed, bool isRaining, bool peopleInRoom)
     {
