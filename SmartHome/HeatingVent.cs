@@ -1,15 +1,17 @@
-﻿namespace SmartHome;
+﻿using System;
+
+namespace SmartHome;
 
 public class HeatingVent : RoomDecorator
 {
     private bool _isOpen = false;
 
-    public HeatingVent(Room room) : base(room)
+    public HeatingVent(Room room, IOutput output = null)
+        : base(room, output)
     {
         if (room.Name == "Wintergarten" || room.Name == "Garage")
             throw new InvalidOperationException("Heizungsventile sind in diesem Raum nicht erlaubt.");
     }
-
 
     public override void Operate(double externalTemperature, double roomTemperature, double windSpeed, bool isRaining, bool peopleInRoom)
     {
@@ -18,7 +20,7 @@ public class HeatingVent : RoomDecorator
             if (!_isOpen)
             {
                 _isOpen = true;
-                OpenValve();
+                Output.Write($"{Name}: Heizungsventil wird geöffnet (Heizen).");
             }
         }
         else
@@ -26,18 +28,8 @@ public class HeatingVent : RoomDecorator
             if (_isOpen)
             {
                 _isOpen = false;
-                CloseValve();
+                Output.Write($"{Name}: Heizungsventil wird geschlossen (kein Heizen).");
             }
         }
-    }
-
-    private void OpenValve()
-    {
-        Console.WriteLine($"{Name}: Heizungsventil wird geöffnet (Heizen).");
-    }
-
-    private void CloseValve()
-    {
-        Console.WriteLine($"{Name}: Heizungsventil wird geschlossen (kein Heizen).");
     }
 }

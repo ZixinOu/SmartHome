@@ -1,45 +1,50 @@
-﻿using SmartHome;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
 
-namespace TestSmartHome;
-
-[TestClass]
-public class HeatingVentTests
+namespace SmartHome.Tests
 {
-    [TestMethod]
-    public void HeatingVent_Oeffnet_wenn_Aussentemperatur_zu_tief()
+    [TestClass]
+    public class TestHeatingVent
     {
-        // Arrange
-        var room = new RoomDummy("Wohnzimmer") { TargetTemperature = 22 };
-        var vent = new HeatingVent(room);
+        private StringWriter CaptureOutput()
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            return sw;
+        }
 
-        var output = new StringWriter();
-        Console.SetOut(output);
+        private void ResetConsole()
+        {
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+        }
 
-        double externalTemp = 15; 
+        [TestMethod]
+        public void HeatingVent_OpensWhenCold()
+        {
+            var hv = new HeatingVent(new Bathroom());
 
-        // Act
-        vent.Operate(externalTemp, room.TargetTemperature, 0, false, false);
+            var sw = CaptureOutput();
+            hv.Operate(externalTemperature: 5, roomTemperature: 20, windSpeed: 0, isRaining: false, peopleInRoom: true);
+            ResetConsole();
 
-        // Assert
-        Assert.Contains("Heizungsventil wird geöffnet", output.ToString());
-    }
+            var output = sw.ToString();
+            StringAssert.Contains(output, "geöffnet");
+        }
 
-    [TestMethod]
-    public void HeatingVent_Schliesst_wenn_Temperatur_ausreichend()
-    {
-        // Arrange
-        var room = new RoomDummy("Wohnzimmer") { TargetTemperature = 22 };
-        var vent = new HeatingVent(room);
+        [TestMethod]
+        public void HeatingVent_ClosesWhenWarm()
+        {
+            var hv = new HeatingVent(new Bathroom());
+            
+            hv.Operate(5, 20, 0, false, true);
 
-        vent.Operate(15, room.TargetTemperature, 0, false, false);
+            var sw = CaptureOutput();
+            hv.Operate(externalTemperature: 25, roomTemperature: 20, windSpeed: 0, isRaining: false, peopleInRoom: true);
+            ResetConsole();
 
-        var output = new StringWriter();
-        Console.SetOut(output);
-
-        // Act 
-        vent.Operate(25, room.TargetTemperature, 0, false, false);
-
-        // Assert
-        Assert.Contains("Heizungsventil wird geschlossen", output.ToString());
+            var output = sw.ToString();
+            StringAssert.Contains(output, "geschlossen");
+        }
     }
 }

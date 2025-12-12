@@ -1,26 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartHome;
 
-namespace SmartHome
+public abstract class RoomDecorator : Room
 {
-    public abstract class RoomDecorator : Room
+    protected Room innerRoom;
+    protected IOutput Output;
+
+    protected RoomDecorator(Room room, IOutput output = null)
+        : base(room.Name, room.HasBlinds, room.HasAwnings)
     {
-        protected Room innerRoom;
-
-        protected RoomDecorator(Room room)
-            : base(room.Name, room.HasBlinds, room.HasAwnings)
-        {
-            innerRoom = room;
-        }
-
-        public abstract void Operate(
-            double externalTemperature,
-            double roomTemperature,
-            double windSpeed,
-            bool isRaining,
-            bool peopleInRoom);
+        innerRoom = room;
+        Output = output ?? new ConsoleOutput();
     }
+
+    public abstract void Operate(
+        double externalTemperature,
+        double roomTemperature,
+        double windSpeed,
+        bool isRaining,
+        bool peopleInRoom);
 }

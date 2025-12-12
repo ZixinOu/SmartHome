@@ -1,10 +1,13 @@
-﻿namespace SmartHome;
+﻿using System;
+
+namespace SmartHome;
 
 public class Jalousiencontroler : RoomDecorator
 {
     private bool _isLowered = false;
 
-    public Jalousiencontroler(Room room) : base(room)
+    public Jalousiencontroler(Room room, IOutput output = null)
+        : base(room, output)
     {
         if (room.Name == "Bad/WC" || room.Name == "Garage")
             throw new InvalidOperationException("Jalousiensteuerungen sind in diesem Raum nicht erlaubt.");
@@ -17,7 +20,7 @@ public class Jalousiencontroler : RoomDecorator
             if (!_isLowered)
             {
                 _isLowered = true;
-                LowerBlinds();
+                Output.Write($"{Name}: Jalousie wird runtergefahren.");
             }
         }
         else
@@ -25,18 +28,8 @@ public class Jalousiencontroler : RoomDecorator
             if (_isLowered)
             {
                 _isLowered = false;
-                RaiseBlinds();
+                Output.Write($"{Name}: Jalousie wird hochgefahren.");
             }
         }
-    }
-
-    private void LowerBlinds()
-    {
-        Console.WriteLine($"{Name}: Jalousie wird runtergefahren.");
-    }
-
-    private void RaiseBlinds()
-    {
-        Console.WriteLine($"{Name}: Jalousie wird hochgefahren.");
     }
 }

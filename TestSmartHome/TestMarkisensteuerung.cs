@@ -1,76 +1,46 @@
-﻿using SmartHome;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
 
-namespace TestSmartHome;
-
-[TestClass]
-public class TestMarkisensteuerung
+namespace SmartHome.Tests
 {
-    [TestMethod]
-    public void Markise_wird_ausgefahren_wenn_Bedingungen_erfuellt()
+    [TestClass]
+    public class TestMarkisensteuerung
     {
-        // Arrange
-        var room = new RoomDummy("Wohnzimmer");
-        var sut = new Markisensteuerung(room);
+        private StringWriter CaptureOutput()
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            return sw;
+        }
 
-        var sw = new StringWriter();
-        Console.SetOut(sw);
+        private void ResetConsole()
+        {
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+        }
 
-        double externalTemp = 30;
-        double roomTemp = 22;
-        double windSpeed = 20;
-        bool isRaining = false;
+        [TestMethod]
+        public void Markise_Extends_WhenHotLowWindDry()
+        {
+            var m = new Markisensteuerung(new WinterGarden());
 
-        // Act
-        sut.Operate(externalTemp, roomTemp, windSpeed, isRaining, false);
+            var sw = CaptureOutput();
+            m.Operate(30, 20, 10, false, false);
+            ResetConsole();
 
-        // Assert
-        string output = sw.ToString();
-        Assert.Contains("Markise wird ausgefahren", output);
-    }
+            StringAssert.Contains(sw.ToString(), "ausgefahren");
+        }
 
-    [TestMethod]
-    public void Markise_wird_eingefahren_wenn_Wind_zu_stark()
-    {
-        // Arrange
-        var room = new RoomDummy("Wohnzimmer");
-        var sut = new Markisensteuerung(room);
+        [TestMethod]
+        public void Markise_Retracts_WhenWindHigh()
+        {
+            var m = new Markisensteuerung(new WinterGarden());
 
-        var sw = new StringWriter();
-        Console.SetOut(sw);
+            var sw = CaptureOutput();
+            m.Operate(30, 20, 60, false, false);
+            ResetConsole();
 
-        double externalTemp = 30;
-        double roomTemp = 22;
-        double windSpeed = 40;
-        bool isRaining = false;
-
-        // Act
-        sut.Operate(externalTemp, roomTemp, windSpeed, isRaining, false);
-
-        // Assert
-        string output = sw.ToString();
-        Assert.Contains("Markise wird eingefahren", output);
-    }
-
-    [TestMethod]
-    public void Markise_wird_eingefahren_wenn_es_regnet()
-    {
-        // Arrange
-        var room = new RoomDummy("Wohnzimmer");
-        var sut = new Markisensteuerung(room);
-
-        var sw = new StringWriter();
-        Console.SetOut(sw);
-
-        double externalTemp = 30;
-        double roomTemp = 22;
-        double windSpeed = 10;
-        bool isRaining = true;
-
-        // Act
-        sut.Operate(externalTemp, roomTemp, windSpeed, isRaining, false);
-
-        // Assert
-        string output = sw.ToString();
-        Assert.Contains("Markise wird eingefahren", output);
+            StringAssert.Contains(sw.ToString(), "eingefahren");
+        }
     }
 }

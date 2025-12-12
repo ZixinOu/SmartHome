@@ -1,47 +1,48 @@
-﻿using SmartHome;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
 
-namespace TestSmartHome;
-
-[TestClass]
-public class JalousiencontrollerTests
+namespace SmartHome.Tests
 {
-    [TestMethod]
-    public void Jalousie_faehrt_runter_wenn_heiss_und_keine_Personen()
+    [TestClass]
+    public class TestJalousiencontroler
     {
-        // Arrange
-        var room = new RoomDummy("Wohnzimmer");
-        var ctrl = new Jalousiencontroler(room);
+        private StringWriter CaptureOutput()
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            return sw;
+        }
 
-        var output = new StringWriter();
-        Console.SetOut(output);
+        private void ResetConsole()
+        {
+            Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+        }
 
-        double externalTemp = 30;
-        double roomTemp = 22;
-        bool peopleInRoom = false;
+        [TestMethod]
+        public void Jalousien_Lowers_WhenHotAndNoPeople()
+        {
+            var jal = new Jalousiencontroler(new Bedroom());
 
-        // Act
-        ctrl.Operate(externalTemp, roomTemp, 0, false, peopleInRoom);
+            var sw = CaptureOutput();
+            jal.Operate(30, 20, 0, false, false);
+            ResetConsole();
 
-        // Assert
-        Assert.Contains("Jalousie wird runtergefahren", output.ToString());
-    }
+            StringAssert.Contains(sw.ToString(), "runter");
+        }
 
-    [TestMethod]
-    public void Jalousie_faehrt_hoch_wenn_Personen_im_Raum()
-    {
-        // Arrange
-        var room = new RoomDummy("Wohnzimmer");
-        var ctrl = new Jalousiencontroler(room);
+        [TestMethod]
+        public void Jalousien_Raises_WhenPeoplePresent()
+        {
+            var jal = new Jalousiencontroler(new Bedroom());
+            
+            jal.Operate(30, 20, 0, false, false);
 
-        ctrl.Operate(30, 22, 0, false, false);
+            var sw = CaptureOutput();
+            jal.Operate(30, 20, 0, false, true);
+            ResetConsole();
 
-        var output = new StringWriter();
-        Console.SetOut(output);
-
-        // Act
-        ctrl.Operate(30, 22, 0, false, true);
-
-        // Assert
-        Assert.Contains("Jalousie wird hochgefahren", output.ToString());
+            StringAssert.Contains(sw.ToString(), "hoch");
+        }
     }
 }

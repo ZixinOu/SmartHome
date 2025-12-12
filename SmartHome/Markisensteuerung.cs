@@ -1,33 +1,27 @@
 ﻿namespace SmartHome;
 
+using System;
+
 public class Markisensteuerung : RoomDecorator
 {
-    public Markisensteuerung(Room room)
-        : base(room)
+    public Markisensteuerung(Room room, IOutput output = null)
+        : base(room, output)
     {
-        HasAwnings = true;
         if (room.Name != "Wintergarten")
             throw new InvalidOperationException("Markisensteuerungen sind nur im Wintergarten erlaubt.");
+
+        HasAwnings = true;
     }
 
-    public override void Operate(
-        double externalTemperature,
-        double roomTemperature,
-        double windSpeed,
-        bool isRaining,
-        bool peopleInRoom)
+    public override void Operate(double externalTemperature, double roomTemperature, double windSpeed, bool isRaining, bool peopleInRoom)
     {
-        
-        if (HasAwnings)
+        if (externalTemperature > roomTemperature && windSpeed <= 30 && !isRaining)
         {
-            if (externalTemperature > roomTemperature && windSpeed <= 30 && !isRaining)
-            {
-                Console.WriteLine($"{Name}: Markise wird ausgefahren.");
-            }
-            else
-            {
-                Console.WriteLine($"{Name}: Markise wird eingefahren.");
-            }
+            Output.Write($"{Name}: Markise wird ausgefahren.");
+        }
+        else
+        {
+            Output.Write($"{Name}: Markise wird eingefahren.");
         }
     }
 }
