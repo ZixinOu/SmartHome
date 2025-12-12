@@ -22,23 +22,6 @@ namespace SmartHome
             double windSpeed,
             bool isRaining,
             bool peopleInRoom);
-        
-        public static bool Update(Room room, WeatherData data)
-        {
-            try
-            {
-                var method = room.GetType().GetMethod("UpdateWithWeather");
-                if (method != null)
-                {
-                    var result = method.Invoke(room, new object[] { data });
-                    if (result is bool b) return b;
-                }
-            }
-            catch { }
-
-            Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] Updated {room.GetType().Name} with weather {data} (Markisensteuerung applied)");
-            return true;
-        }
     }
 
 }
