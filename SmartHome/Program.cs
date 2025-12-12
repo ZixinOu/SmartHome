@@ -44,11 +44,6 @@ class Program
         {
             WeatherData weatherData = weatherSensor.GenerateWeather();
             Console.WriteLine(weatherData);
-
-            foreach (var room in rooms)
-            {
-                room.Update(weatherData);
-            }
         }
     }
 }

@@ -27,20 +27,5 @@ public class Markisensteuerung : RoomDecorator
                 Console.WriteLine($"{Name}: Markise wird eingefahren.");
             }
         }
-
-    }
-
-    public override void Update(WeatherData weatherData)
-    {
-
-        base.Update(weatherData);
-
-
-        Operate(
-            weatherData.Temperature,
-            weatherData.Temperature,
-            weatherData.WindSpeed,
-            weatherData.IsRaining,
-            IsOccupied);
     }
 }

@@ -8,8 +8,4 @@ public class RoomDummy : Room
         : base(name, hasBlinds: false, hasAwnings: false)
     {
     }
-
-    public override void Update(WeatherData weatherData)
-    {
-    }
 }

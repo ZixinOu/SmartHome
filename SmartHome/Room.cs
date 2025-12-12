@@ -13,6 +13,4 @@ public abstract class Room
         HasBlinds = hasBlinds;
         HasAwnings = hasAwnings;
     }
-
-    public abstract void Update(WeatherData weatherData);
 }
